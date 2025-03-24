@@ -28,5 +28,12 @@ _, axs = plt.subplots(1,2, figsize=(10, 5))
 
 axs[0].imshow(image_1, cmap='gray', vmin=0, vmax=255)
 axs[0].set_title("uji coba citra")
+# axs[1].imshow(image_2, cmap='gray', vmin=0, vmax=255)
+# axs[1].set_title("uji coba citra")
+
+axs[1].imshow(creeper)
+axs[1].set_title("creeper??")
+
+plt.show()
 
 
