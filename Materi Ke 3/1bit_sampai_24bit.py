@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+
+# membuat array image_1: representasi gambar grayscale (5x7 piksel)
 image_1 = np.array([
     [0,0,255,0,35,0,0],
     [0,210,0,25,0,50,0],
