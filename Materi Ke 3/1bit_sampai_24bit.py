@@ -1,4 +1,4 @@
-
+import numpy as np
 import matplotlib.pyplot as plt
 image_1 = np.array([
     [0,0,255,0,35,0,0],
