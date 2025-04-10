@@ -10,6 +10,7 @@ image_1 = np.array([
     [0,0,0,140,0,0,0],
 ], dtype=np.uint8)
 
+# Membuat array image_2 (tidak ditampilkan di plot saat ini)
 image_2 = np.array([
     [0,255,200],
     [130,3,210],
