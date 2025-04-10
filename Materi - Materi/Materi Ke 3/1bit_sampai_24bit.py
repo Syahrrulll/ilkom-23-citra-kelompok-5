@@ -42,6 +42,7 @@ axs[0].set_title("uji coba citra")
 axs[1].imshow(creeper)
 axs[1].set_title("creeper??")
 
+# Menampilkan semua gambar di jendela output
 plt.show()
 
 
