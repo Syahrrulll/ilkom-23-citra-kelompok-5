@@ -32,12 +32,13 @@ creeper = np.array([
 # Menyiapkan subplot 1 baris 2 kolom untuk menampilkan dua gambar
 _, axs = plt.subplots(1,2, figsize=(10, 5))
 
-#Menampilkan gambar grayscale di sebelah kiri
+# Menampilkan gambar grayscale di sebelah kiri
 axs[0].imshow(image_1, cmap='gray', vmin=0, vmax=255)
 axs[0].set_title("uji coba citra")
 # axs[1].imshow(image_2, cmap='gray', vmin=0, vmax=255)
 # axs[1].set_title("uji coba citra")
 
+# Menampilkan gambar RGB 'creeper' di sebelah kanan
 axs[1].imshow(creeper)
 axs[1].set_title("creeper??")
 
