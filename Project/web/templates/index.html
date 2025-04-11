@@ -7,10 +7,22 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Selamat Datang di web project citra kelompok 5</h1>
-    <ol>
-        <li> <a href="/proses_gambar"> Tekan disini untuk melihat fitur citra </a></li>
-    </ol>
-    <img src="../static/uploads/yamal.jpg">
+    <div class="container">
+        <header>
+            <h1>👋 Selamat Datang!</h1>
+            <p>Ini adalah web project pengolahan citra digital oleh <strong>Kelompok 5</strong>.</p>
+        </header>
+
+        <main>
+            <a class="btn" href="/proses_gambar">🔍 Lihat Fitur Citra</a>
+            <div class="image-wrapper">
+                <img src="{{ url_for('static', filename='uploads/yamal.jpg') }}" alt="Contoh Gambar Citra">
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 Kelompok 5. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
