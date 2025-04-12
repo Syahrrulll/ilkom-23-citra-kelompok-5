@@ -1,14 +1,20 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
 import cv2
+import numpy as np
 from konfigurasi import Konfigurasi
 
-app = Flask(__name__)  # perbaiki _name_ ke __name__
+app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['PROCESSED_FOLDER'] = 'static/processed/'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/', methods=['GET'])
 def index():
@@ -34,19 +40,22 @@ def upload_image():
         file = request.files['image']
         if file.filename == '':
             return redirect(request.url)
-        if file:
+        if file and allowed_file(file.filename):
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filepath)
             
-            # Proses konversi grayscale
+            # Convert to grayscale
             img = cv2.imread(filepath)
+            if img is None:
+                return "Error: Gambar tidak valid."
+            
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             processed_path = os.path.join(app.config['PROCESSED_FOLDER'], file.filename)
             cv2.imwrite(processed_path, gray_img)
             
             return render_template('fitur.html', original=file.filename, processed=file.filename)
-
+    
     return render_template('fitur.html', original=None, processed=None)
 
-if __name__ == '__main__':  # perbaiki _name_ jadi __name__
+if __name__ == '__main__':
     app.run(debug=True)
