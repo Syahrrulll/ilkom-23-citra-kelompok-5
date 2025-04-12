@@ -3,7 +3,7 @@ import os
 import cv2
 from konfigurasi import Konfigurasi
 
-app = Flask(__name__)  # perbaiki _name_ ke __name__
+app = Flask(__name__)  # perbaiki _name ke __name__
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['PROCESSED_FOLDER'] = 'static/processed/'
 
@@ -58,6 +58,9 @@ def upload_image():
             elif konversi == 'threshold':
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 _, processed_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+            elif konversi == 'bit1':
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                _, processed_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 
             # Tentukan ekstensi file output berdasarkan konversi grayscale / tidak
             if len(processed_img.shape) == 2:
@@ -71,6 +74,5 @@ def upload_image():
 
     return render_template('fitur.html', original=None, processed=None)
 
-
-if __name__ == '__main__':  # perbaiki _name_ jadi __name__
+if __name__ == '__main__':  # perbaiki _name jadi __name__
     app.run(debug=True)

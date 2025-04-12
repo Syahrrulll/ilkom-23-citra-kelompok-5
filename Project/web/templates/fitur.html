@@ -32,6 +32,7 @@
                 <option value="blur">Blur</option>
                 <option value="invert">Invert Warna</option>
                 <option value="threshold">Threshold</option>
+                <option value="bit1">1-bit (Hitam-Putih)</option>
             </select><br><br>
         
             <button type="submit">Proses Gambar</button>
@@ -61,7 +62,7 @@
                     const delta = e.deltaY > 0 ? -0.1 : 0.1;
                     scale += delta;
                     scale = Math.min(Math.max(1, scale), 3); // Batas zoom 1x - 3x
-                    img.style.transform = `scale(${scale})`;
+                    img.style.transform = scale(${scale});
                 });
             });
         });
