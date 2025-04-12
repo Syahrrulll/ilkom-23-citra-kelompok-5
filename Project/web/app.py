@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for
 import os
 import cv2
-import numpy as np
 from konfigurasi import Konfigurasi
 
-app = Flask(__name__)
+app = Flask(__name__)  # perbaiki _name_ ke __name__
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['PROCESSED_FOLDER'] = 'static/processed/'
 
@@ -15,7 +14,7 @@ os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
 def index():
     return render_template('index.html')
 
-@app.route('/config_spk',methods=['GET','POST'])
+@app.route('/config_spk', methods=['GET', 'POST'])
 def config_spk():
     konfig = Konfigurasi()
     data = konfig.read_yaml()
@@ -39,15 +38,15 @@ def upload_image():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filepath)
             
-            # Convert to grayscale
+            # Proses konversi grayscale
             img = cv2.imread(filepath)
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             processed_path = os.path.join(app.config['PROCESSED_FOLDER'], file.filename)
             cv2.imwrite(processed_path, gray_img)
             
             return render_template('fitur.html', original=file.filename, processed=file.filename)
-    
+
     return render_template('fitur.html', original=None, processed=None)
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # perbaiki _name_ jadi __name__
     app.run(debug=True)
