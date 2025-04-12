@@ -33,6 +33,7 @@
                 <option value="invert">Invert Warna</option>
                 <option value="threshold">Threshold</option>
                 <option value="bit1">1-bit (Hitam-Putih)</option>
+                <option value="cek_biru">Cek Kedalaman Warna Biru</option>
             </select><br><br>
         
             <button type="submit">Proses Gambar</button>
@@ -49,6 +50,11 @@
         {% if histogram %}
         <h2>Histogram Grayscale</h2>
         <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
+        {% endif %}
+
+        {% if blue_value %}
+        <h2>Kedalaman Warna Biru</h2>
+        <p>Rata-rata Intensitas Biru: {{ blue_value }}</p>
         {% endif %}
     </div>
     {% endif %}

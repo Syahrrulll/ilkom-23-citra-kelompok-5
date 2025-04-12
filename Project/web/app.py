@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import cv2
 import matplotlib.pyplot as plt
+import numpy as np 
 from konfigurasi import Konfigurasi
 
 app = Flask(__name__)  # perbaiki _name ke __name__
@@ -79,6 +80,10 @@ def upload_image():
             elif konversi == 'bit1':
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 _, processed_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+            elif konversi == 'cek_biru':
+                blue_channel = img[:, :, 0]
+                blue_value = round(np.mean(blue_channel), 2)
+                processed_img = img  
 
             # Tentukan ekstensi file output berdasarkan konversi grayscale / tidak
             if len(processed_img.shape) == 2:
@@ -88,9 +93,9 @@ def upload_image():
 
             cv2.imwrite(processed_path, processed_img)
 
-            return render_template('fitur.html', original=filename, processed=filename, histogram=histogram_filename)
+            return render_template('fitur.html', original=filename, processed=filename, histogram=histogram_filename, blue_value=blue_value)
 
-    return render_template('fitur.html', original=None, processed=None, histogram=None)
+    return render_template('fitur.html', original=None, processed=None, histogram=None, blue_value=None)
 
 if __name__ == '__main__':  # perbaiki _name jadi __name__
     app.run(debug=True)
