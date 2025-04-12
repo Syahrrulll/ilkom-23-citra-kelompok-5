@@ -45,6 +45,11 @@
         <img src="{{ url_for('static', filename='uploads/' + original) }}" alt="Original Image" class="zoomable">
         <h2>Hasil Konversi</h2>
         <img src="{{ url_for('static', filename='processed/' + processed) }}" alt="Processed Image" class="zoomable">
+
+        {% if histogram %}
+        <h2>Histogram Grayscale</h2>
+        <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
+        {% endif %}
     </div>
     {% endif %}
 
