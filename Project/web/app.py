@@ -1,14 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import cv2
+import matplotlib.pyplot as plt
 from konfigurasi import Konfigurasi
 
 app = Flask(__name__)  # perbaiki _name_ ke __name__
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['PROCESSED_FOLDER'] = 'static/processed/'
+app.config['HISTOGRAM_FOLDER'] = 'static/histogram/'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
+os.makedirs(app.config['HISTOGRAM_FOLDER'], exist_ok=True)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -44,10 +47,25 @@ def upload_image():
 
             img = cv2.imread(filepath)
             processed_img = None
+            histogram_filename = None
 
             # Pilihan konversi
             if konversi == 'grayscale':
                 processed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+                # Buat histogram
+                name, ext = os.path.splitext(filename)
+                histogram_filename = f"hist_{filename}.png"
+                histogram_path = os.path.join(app.config['HISTOGRAM_FOLDER'], histogram_filename)
+
+                plt.figure(figsize=(6, 4))
+                plt.hist(processed_img.ravel(), bins=256, range=[0, 256], color='gray')
+                plt.title('Grayscale Histogram')
+                plt.xlabel('Pixel Value')
+                plt.ylabel('Frequency')
+                plt.tight_layout()
+                plt.savefig(histogram_path)
+                plt.close()
             elif konversi == 'edge':
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 processed_img = cv2.Canny(gray, 100, 200)
@@ -67,9 +85,9 @@ def upload_image():
 
             cv2.imwrite(processed_path, processed_img)
 
-            return render_template('fitur.html', original=filename, processed=filename)
+            return render_template('fitur.html', original=filename, processed=filename, histogram=histogram_filename)
 
-    return render_template('fitur.html', original=None, processed=None)
+    return render_template('fitur.html', original=None, processed=None, histogram=None)
 
 
 if __name__ == '__main__':  # perbaiki _name_ jadi __name__
