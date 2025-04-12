@@ -29,24 +29,48 @@ def config_spk():
 @app.route('/proses_gambar', methods=['GET', 'POST'])
 def upload_image():
     if request.method == 'POST':
-        if 'image' not in request.files:
+        if 'image' not in request.files or 'konversi' not in request.form:
             return redirect(request.url)
+        
         file = request.files['image']
+        konversi = request.form['konversi']
+        
         if file.filename == '':
             return redirect(request.url)
         if file:
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            filename = file.filename
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
-            
-            # Proses konversi grayscale
+
             img = cv2.imread(filepath)
-            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            processed_path = os.path.join(app.config['PROCESSED_FOLDER'], file.filename)
-            cv2.imwrite(processed_path, gray_img)
-            
-            return render_template('fitur.html', original=file.filename, processed=file.filename)
+            processed_img = None
+
+            # Pilihan konversi
+            if konversi == 'grayscale':
+                processed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            elif konversi == 'edge':
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                processed_img = cv2.Canny(gray, 100, 200)
+            elif konversi == 'blur':
+                processed_img = cv2.GaussianBlur(img, (11, 11), 0)
+            elif konversi == 'invert':
+                processed_img = cv2.bitwise_not(img)
+            elif konversi == 'threshold':
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                _, processed_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+
+            # Tentukan ekstensi file output berdasarkan konversi grayscale / tidak
+            if len(processed_img.shape) == 2:
+                processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
+            else:
+                processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
+
+            cv2.imwrite(processed_path, processed_img)
+
+            return render_template('fitur.html', original=filename, processed=filename)
 
     return render_template('fitur.html', original=None, processed=None)
+
 
 if __name__ == '__main__':  # perbaiki _name_ jadi __name__
     app.run(debug=True)

@@ -26,6 +26,7 @@ body {
     flex-direction: column;
     align-items: center;
     transition: background-color 0.4s ease, color 0.4s ease;
+    min-height: 100vh;
 }
 
 h1 {
@@ -33,6 +34,12 @@ h1 {
     font-weight: 600;
     margin-bottom: 0.5rem;
     text-align: center;
+}
+
+h2 {
+    margin-top: 2rem;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 a {
@@ -50,6 +57,7 @@ a {
     width: 100%;
     max-width: 550px;
     text-align: center;
+    margin-bottom: 2rem;
     transition: background-color 0.4s ease;
 }
 
@@ -60,6 +68,7 @@ input[type="file"] {
     border-radius: 0.5rem;
     border: 1px solid #ccc;
     background-color: #fff;
+    font-family: inherit;
 }
 
 button {
@@ -71,12 +80,11 @@ button {
     cursor: pointer;
     font-weight: 600;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    transition: filter 0.3s ease;
     margin-top: 1rem;
 }
 
 button:hover {
-    background-color: darken(var(--primary-color), 10%);
     filter: brightness(0.9);
 }
 
@@ -86,6 +94,7 @@ img {
     border-radius: 0.7rem;
     box-shadow: 0 4px 12px var(--shadow-color);
     transition: transform 0.3s ease;
+    cursor: zoom-in;
 }
 
 img:hover {
@@ -105,9 +114,59 @@ img:hover {
     height: 40px;
     cursor: pointer;
     box-shadow: 0 4px 8px var(--shadow-color);
-    transition: background-color 0.3s ease;
+    transition: filter 0.3s ease;
 }
 
 .theme-toggle:hover {
-    background-color: #004bb5;
+    filter: brightness(0.9);
+}
+
+/* Image Preview hidden state */
+#preview {
+    display: none;
+    margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+select {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 0.7rem;
+    border: 1px solid #ccc;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 1rem;
+}
+
+body.dark select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23f0f0f0" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    border: 1px solid #555;
+}
+
+select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+    outline: none;
 }

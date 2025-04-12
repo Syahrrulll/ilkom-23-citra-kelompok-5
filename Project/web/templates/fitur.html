@@ -20,20 +20,29 @@
     <a href="/">← Kembali ke Halaman Utama</a>
 
     <div class="container">
-        <h2>Konversi Grayscale</h2>
+        <h2>Konversi Gambar</h2>
         <form action="/proses_gambar" method="POST" enctype="multipart/form-data">
-            <input type="file" name="image" id="imageInput" accept="image/*" required>
-            <img id="preview" src="#" alt="Image Preview" style="display: none;" class="zoomable">
-            <br>
-            <button type="submit">Convert ke Grayscale</button>
+            <label for="imageInput">Upload Gambar:</label>
+            <input type="file" name="image" id="imageInput" accept="image/*" required><br><br>
+        
+            <label for="konversi">Pilih Jenis Konversi:</label>
+            <select name="konversi" id="konversi" required>
+                <option value="grayscale">Grayscale</option>
+                <option value="edge">Edge Detection (Canny)</option>
+                <option value="blur">Blur</option>
+                <option value="invert">Invert Warna</option>
+                <option value="threshold">Threshold</option>
+            </select><br><br>
+        
+            <button type="submit">Proses Gambar</button>
         </form>
-    </div>
+        
 
     {% if original and processed %}
     <div class="container">
         <h2>Gambar Asli</h2>
         <img src="{{ url_for('static', filename='uploads/' + original) }}" alt="Original Image" class="zoomable">
-        <h2>Hasil Grayscale</h2>
+        <h2>Hasil Konversi</h2>
         <img src="{{ url_for('static', filename='processed/' + processed) }}" alt="Processed Image" class="zoomable">
     </div>
     {% endif %}
