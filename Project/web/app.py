@@ -11,16 +11,11 @@ app.config['PROCESSED_FOLDER'] = 'static/processed/'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
-@app.route('/config_spk', methods=['GET', 'POST'])
+@app.route('/config_spk',methods=['GET','POST'])
 def config_spk():
     konfig = Konfigurasi()
     data = konfig.read_yaml()
@@ -40,15 +35,12 @@ def upload_image():
         file = request.files['image']
         if file.filename == '':
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file:
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filepath)
             
             # Convert to grayscale
             img = cv2.imread(filepath)
-            if img is None:
-                return "Error: Gambar tidak valid."
-            
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             processed_path = os.path.join(app.config['PROCESSED_FOLDER'], file.filename)
             cv2.imwrite(processed_path, gray_img)
@@ -58,4 +50,4 @@ def upload_image():
     return render_template('fitur.html', original=None, processed=None)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
