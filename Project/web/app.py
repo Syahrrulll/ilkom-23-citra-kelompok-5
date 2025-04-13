@@ -89,22 +89,33 @@ def upload_image():
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 _, processed_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
             elif konversi == 'cek_biru':
-                # Warna biru murni dalam BGR
-                target_biru = np.array([255, 0, 0])  # BGR, bukan RGB
+                target = np.array([255, 0, 0])  # BGR untuk biru
+                channel_name = "Biru"
+            elif konversi == 'cek_merah':
+                target = np.array([0, 0, 255])  # BGR untuk merah
+                channel_name = "Merah"
+            elif konversi == 'cek_hijau':
+                target = np.array([0, 255, 0])  # BGR untuk hijau
+                channel_name = "Hijau"
 
-                # Hitung jarak Euclidean setiap piksel ke warna biru murni
-                distance = np.linalg.norm(img.astype(np.int16) - target_biru, axis=2)
-
-                # Normalisasi ke rentang 0–255, lalu invert
-                max_distance = np.sqrt((255**2)*3)  # Maksimal jarak di RGB
+            if konversi.startswith("cek_"):
+                # Hitung jarak warna ke target
+                distance = np.linalg.norm(img.astype(np.int16) - target, axis=2)
+                max_distance = np.sqrt((255**2)*3)
                 intensity = 255 - (distance / max_distance * 255).astype(np.uint8)
-
-                # Gambar akhir: semakin biru -> semakin putih
                 processed_img = intensity
 
-                # Hitung nilai rata-rata channel biru (opsional, masih bisa ditampilkan)
-                blue_channel = img[:, :, 0]
-                blue_value = round(np.mean(blue_channel), 2)
+                # Hitung rata-rata nilai channel terkait
+                if konversi == 'cek_biru':
+                    channel = img[:, :, 0]
+                elif konversi == 'cek_hijau':
+                    channel = img[:, :, 1]
+                elif konversi == 'cek_merah':
+                    channel = img[:, :, 2]
+                else:
+                    channel = img[:, :, 0]
+                color_value = round(np.mean(channel), 2)
+
  
 
             # Jika tidak ada konversi yang menghasilkan gambar, gunakan gambar asli
@@ -118,7 +129,7 @@ def upload_image():
             # Buat histogram dari gambar hasil konversi
             histogram_filename = generate_histogram(processed_img, filename)
 
-            return render_template('fitur.html', original=filename, processed=filename, histogram=histogram_filename, blue_value=blue_value)
+            return render_template('fitur.html', original=filename, processed=filename, histogram=histogram_filename, blue_value=blue_value, channel_name=channel_name, color_value=color_value)
 
     return render_template('fitur.html', original=None, processed=None, histogram=None, blue_value=None)
 

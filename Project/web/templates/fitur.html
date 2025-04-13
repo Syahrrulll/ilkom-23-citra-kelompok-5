@@ -34,6 +34,9 @@
                 <option value="threshold">Threshold</option>
                 <option value="bit1">1-bit (Hitam-Putih)</option>
                 <option value="cek_biru">Cek Kedalaman Warna Biru</option>
+                <option value="cek_merah">Cek Kedalaman Warna Merah</option>
+                <option value="cek_hijau">Cek Kedalaman Warna Hijau</option>
+
             </select><br><br>
         
             <button type="submit">Proses Gambar</button>
@@ -53,9 +56,10 @@
         {% endif %}
 
         {% if blue_value %}
-        <h2>Kedalaman Warna Biru</h2>
-        <p>Rata-rata Intensitas Biru: {{ blue_value }}</p>
+        <h2>Kedalaman Warna {{ channel_name }}</h2>
+        <p>Rata-rata Intensitas {{ channel_name }}: {{ blue_value }}</p>
         {% endif %}
+
     </div>
     {% endif %}
 
@@ -73,7 +77,7 @@
                     const delta = e.deltaY > 0 ? -0.1 : 0.1;
                     scale += delta;
                     scale = Math.min(Math.max(1, scale), 3); // Batas zoom 1x - 3x
-                    img.style.transform = scale($scale);
+                    img.style.transform = `scale(${scale})`;
                 });
             });
         });
