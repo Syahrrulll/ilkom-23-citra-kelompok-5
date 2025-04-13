@@ -7,16 +7,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    <div class="container fade-in">
         <header>
             <h1>👋 Selamat Datang!</h1>
-            <p>Ini adalah web project pengolahan citra digital oleh <strong>Kelompok 5</strong>.</p>
+            <p>Website ini dibuat untuk menampilkan hasil pengolahan citra digital oleh <strong>Kelompok 5</strong>.</p>
         </header>
 
         <main>
-            <a class="btn" href="/proses_gambar">🔍 Lihat Fitur Citra</a>
+            <a class="btn pulse" href="/proses_gambar">🔍 Lihat Fitur Citra</a>
             <div class="image-wrapper">
-                <img src="../static/processed/yamal.jpg" alt="Gambar Fitur Greyscalling">
+                <img src="../static/processed/yamal.jpg" alt="Gambar Fitur Greyscalling" class="image-zoom-in">
             </div>
         </main>
 
@@ -24,5 +25,11 @@
             <p>© 2025 Kelompok 5. All rights reserved.</p>
         </footer>
     </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+        }
+    </script>
 </body>
 </html>
