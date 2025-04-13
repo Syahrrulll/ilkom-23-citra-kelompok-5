@@ -27,6 +27,7 @@ body {
     align-items: center;
     transition: background-color 0.4s ease, color 0.4s ease;
     min-height: 100vh;
+    animation: minimalFade 0.8s ease-in-out;
 }
 
 body::before {
@@ -50,18 +51,21 @@ body.dark::before {
     opacity: 0.15;
 }
 
-
 h1 {
     font-size: 2.2rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     text-align: center;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.2s;
 }
 
 h2 {
     margin-top: 2rem;
     font-size: 1.4rem;
     font-weight: 600;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.3s;
 }
 
 a {
@@ -69,6 +73,8 @@ a {
     text-decoration: none;
     margin-bottom: 2rem;
     font-weight: 500;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.4s;
 }
 
 .container {
@@ -81,6 +87,8 @@ a {
     text-align: center;
     margin-bottom: 2rem;
     transition: background-color 0.4s ease;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.4s;
 }
 
 input[type="file"] {
@@ -91,6 +99,8 @@ input[type="file"] {
     border: 1px solid #ccc;
     background-color: #fff;
     font-family: inherit;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.5s;
 }
 
 button {
@@ -104,6 +114,8 @@ button {
     font-size: 1rem;
     transition: filter 0.3s ease;
     margin-top: 1rem;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.8s;
 }
 
 button:hover {
@@ -117,6 +129,8 @@ img {
     box-shadow: 0 4px 12px var(--shadow-color);
     transition: transform 0.3s ease;
     cursor: zoom-in;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 1s;
 }
 
 img:hover {
@@ -137,6 +151,8 @@ img:hover {
     cursor: pointer;
     box-shadow: 0 4px 8px var(--shadow-color);
     transition: filter 0.3s ease;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.6s;
 }
 
 .theme-toggle:hover {
@@ -147,6 +163,8 @@ img:hover {
 #preview {
     display: none;
     margin-top: 1rem;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 1.2s;
 }
 
 /* Select (Dropdown) styling */
@@ -167,6 +185,8 @@ select {
     cursor: pointer;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     margin-top: 1rem;
+    animation: minimalFade 0.6s ease forwards;
+    animation-delay: 0.6s;
 }
 
 body.dark select {
@@ -178,6 +198,18 @@ select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
     outline: none;
+}
+
+/* Animasi minimalis */
+@keyframes minimalFade {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* Responsive */
