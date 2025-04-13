@@ -49,6 +49,7 @@ def upload_image():
             img = cv2.imread(filepath)
             processed_img = None
             histogram_filename = None
+            blue_value = None
 
             # Pilihan konversi
             if konversi == 'grayscale':
