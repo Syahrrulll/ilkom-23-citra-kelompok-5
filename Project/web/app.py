@@ -89,9 +89,23 @@ def upload_image():
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 _, processed_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
             elif konversi == 'cek_biru':
+                # Warna biru murni dalam BGR
+                target_biru = np.array([255, 0, 0])  # BGR, bukan RGB
+
+                # Hitung jarak Euclidean setiap piksel ke warna biru murni
+                distance = np.linalg.norm(img.astype(np.int16) - target_biru, axis=2)
+
+                # Normalisasi ke rentang 0–255, lalu invert
+                max_distance = np.sqrt((255**2)*3)  # Maksimal jarak di RGB
+                intensity = 255 - (distance / max_distance * 255).astype(np.uint8)
+
+                # Gambar akhir: semakin biru -> semakin putih
+                processed_img = intensity
+
+                # Hitung nilai rata-rata channel biru (opsional, masih bisa ditampilkan)
                 blue_channel = img[:, :, 0]
                 blue_value = round(np.mean(blue_channel), 2)
-                processed_img = img  
+ 
 
             # Jika tidak ada konversi yang menghasilkan gambar, gunakan gambar asli
             if processed_img is None:
