@@ -55,6 +55,11 @@
         <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
         {% endif %}
 
+        {% if histogram_rgb %}
+        <h2>Histogram RGB</h2>
+        <img src="{{ url_for('static', filename='histogram/' + histogram_rgb) }}" alt="Histogram RGB" class="zoomable">
+        {% endif %}
+
         {% if blue_value %}
         <h2>Kedalaman Warna {{ channel_name }}</h2>
         <p>Rata-rata Intensitas {{ channel_name }}: {{ blue_value }}</p>
