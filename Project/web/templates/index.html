@@ -6,92 +6,7 @@
   <title>Project Kelompok 5</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80") no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-    }
-
-
-    .container {
-      max-width: 720px;
-      margin: 60px auto;
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.4); /* transparansi */
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(6px);
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    header h1 {
-      font-size: 2.2rem;
-      margin-bottom: 8px;
-    }
-
-    .btn {
-      display: inline-block;
-      background-color: #4aa3df;
-      padding: 12px 25px;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .btn:hover {
-      background-color: #368ac0;
-      transform: translateY(-2px);
-    }
-
-    .image-wrapper {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .image-wrapper img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #ccc;
-    }
-
-    @media screen and (max-width: 600px) {
-      .container {
-        margin: 30px 10px;
-        padding: 20px;
-      }
-
-      header h1 {
-        font-size: 1.6rem;
-      }
-
-      .btn {
-        padding: 10px 18px;
-      }
-    }
-  </style>
-</head>
+  </head>
 <body> 
     <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
     <div class="container fade-in">
@@ -105,8 +20,8 @@
             <div class="image-wrapper">
                 <img src="../static/processed/yames.png" alt="Gambar Fitur Greyscalling" class="image-zoom-in" style="width: 50%;">
             </div>
-        </main>
-<p>ini hasil contoh foto dari konversi ke Grayscale</p>
+        </main> 
+        <p>ini hasil contoh foto dari konversi ke Grayscale</p>
         <footer>
             <p>© 2025 Kelompok 5. All rights reserved.</p>
         </footer>
