@@ -5,72 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konversi Gambar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style_fitur.css') }}">
-
-    <style>
-        .zoomable {
-            transition: transform 0.3s ease;
-            cursor: zoom-in;
-        }
-    </style>
 </head>
 <body>
     <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
 
-    <h1>Pilih Fitur yang Tersedia</h1>
-    <a href="/">← Kembali ke Halaman Utama</a>
+    <main class="fade-in">
+        <h1>Pilih Fitur yang Tersedia</h1>
+        <a href="/">← Kembali ke Halaman Utama</a>
 
-    <div class="container">
-        <h2>Konversi Gambar</h2>
-        <form action="/proses_gambar" method="POST" enctype="multipart/form-data">
-            <label for="imageInput">Upload Gambar:</label>
-            <input type="file" name="image" id="imageInput" accept="image/*" required><br><br>
-        
-            <label for="konversi">Pilih Jenis Konversi:</label>
-            <select name="konversi" id="konversi" required>
-                <option value="grayscale">Grayscale</option>
-                <option value="edge">Edge Detection (Canny)</option>
-                <option value="blur">Blur</option>
-                <option value="invert">Invert Warna</option>
-                <option value="threshold">Threshold</option>
-                <option value="bit1">1-bit (Hitam-Putih)</option>
-                <option value="cek_biru">Cek Kedalaman Warna Biru</option>
-                <option value="cek_merah">Cek Kedalaman Warna Merah</option>
-                <option value="cek_hijau">Cek Kedalaman Warna Hijau</option>
+        <div class="container slide-up">
+            <h2>Konversi Gambar</h2>
+            <form action="/proses_gambar" method="POST" enctype="multipart/form-data">
+                <label for="imageInput">Upload Gambar:</label>
+                <input type="file" name="image" id="imageInput" accept="image/*" required>
+            
+                <label for="konversi">Pilih Jenis Konversi:</label>
+                <select name="konversi" id="konversi" required>
+                    <option value="grayscale">Grayscale</option>
+                    <option value="edge">Edge Detection (Canny)</option>
+                    <option value="blur">Blur</option>
+                    <option value="invert">Invert Warna</option>
+                    <option value="threshold">Threshold</option>
+                    <option value="bit1">1-bit (Hitam-Putih)</option>
+                    <option value="cek_biru">Cek Kedalaman Warna Biru</option>
+                    <option value="cek_merah">Cek Kedalaman Warna Merah</option>
+                    <option value="cek_hijau">Cek Kedalaman Warna Hijau</option>
+                </select>
+                <button type="submit">Proses Gambar</button>
+            </form>
+        </div>
 
-            </select><br><br>
-        
-            <button type="submit">Proses Gambar</button>
-        </form>
-        
+        {% if original and processed %}
+        <div class="container fade-in">
+            <h2>Gambar Asli</h2>
+            <img src="{{ url_for('static', filename='uploads/' + original) }}" alt="Original Image" class="zoomable">
+            <h2>Hasil Konversi</h2>
+            <img src="{{ url_for('static', filename='processed/' + processed) }}" alt="Processed Image" class="zoomable">
 
-    {% if original and processed %}
-    <div class="container">
-        <h2>Gambar Asli</h2>
-        <img src="{{ url_for('static', filename='uploads/' + original) }}" alt="Original Image" class="zoomable">
-        <h2>Hasil Konversi</h2>
-        <img src="{{ url_for('static', filename='processed/' + processed) }}" alt="Processed Image" class="zoomable">
+            {% if histogram %}
+            <h2>Histogram Grayscale</h2>
+            <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
+            {% endif %}
 
-        {% if histogram %}
-        <h2>Histogram Grayscale</h2>
-        <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
+            {% if histogram_rgb %}
+            <h2>Histogram RGB</h2>
+            <img src="{{ url_for('static', filename='histogram/' + histogram_rgb) }}" alt="Histogram RGB" class="zoomable">
+            {% endif %}
+
+            {% if blue_value %}
+            <h2>Kedalaman Warna {{ channel_name }}</h2>
+            <p>Rata-rata Intensitas {{ channel_name }}: {{ blue_value }}</p>
+            {% endif %}
+        </div>
         {% endif %}
-
-        {% if histogram_rgb %}
-        <h2>Histogram RGB</h2>
-        <img src="{{ url_for('static', filename='histogram/' + histogram_rgb) }}" alt="Histogram RGB" class="zoomable">
-        {% endif %}
-
-        {% if blue_value %}
-        <h2>Kedalaman Warna {{ channel_name }}</h2>
-        <p>Rata-rata Intensitas {{ channel_name }}: {{ blue_value }}</p>
-        {% endif %}
-
-    </div>
-    {% endif %}
+    </main>
 
     <script src="{{ url_for('static', filename='script_fitur.js') }}"></script>
     <script>
-        // Zoom in/out dengan scroll pada gambar
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+        }
+
+        // Zoom effect
         document.addEventListener('DOMContentLoaded', function () {
             const zoomImages = document.querySelectorAll('.zoomable');
 
@@ -81,7 +77,7 @@
                     e.preventDefault();
                     const delta = e.deltaY > 0 ? -0.1 : 0.1;
                     scale += delta;
-                    scale = Math.min(Math.max(1, scale), 3); // Batas zoom 1x - 3x
+                    scale = Math.min(Math.max(1, scale), 3);
                     img.style.transform = `scale(${scale})`;
                 });
             });

@@ -127,20 +127,7 @@ img:hover {
     margin-top: 1rem;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-    body {
-        padding: 1rem;
-    }
-
-    .container {
-        padding: 1rem;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-}
+/* Select (Dropdown) styling */
 select {
     width: 100%;
     padding: 0.6rem 1rem;
@@ -169,4 +156,19 @@ select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
     outline: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
 }
