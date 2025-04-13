@@ -32,6 +32,27 @@ def config_spk():
 
 @app.route('/proses_gambar', methods=['GET', 'POST'])
 def upload_image():
+    def generate_histogram(image, filename):
+        histogram_filename = f"hist_{filename}.png"
+        histogram_path = os.path.join(app.config['HISTOGRAM_FOLDER'], histogram_filename)
+        plt.figure(figsize=(6, 4))
+        
+        if len(image.shape) == 2:  # grayscale
+            plt.hist(image.ravel(), bins=256, range=[0, 256], color='gray')
+            plt.title('Grayscale Histogram')
+        else:  # RGB
+            color = ('b', 'g', 'r')
+            for i, col in enumerate(color):
+                plt.plot(cv2.calcHist([image], [i], None, [256], [0, 256]), color=col)
+            plt.title('Color Histogram')
+        
+        plt.xlabel('Pixel Value')
+        plt.ylabel('Frequency')
+        plt.tight_layout()
+        plt.savefig(histogram_path)
+        plt.close()
+        return histogram_filename
+
     if request.method == 'POST':
         if 'image' not in request.files or 'konversi' not in request.form:
             return redirect(request.url)
@@ -54,20 +75,6 @@ def upload_image():
             # Pilihan konversi
             if konversi == 'grayscale':
                 processed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-                # Buat histogram
-                name, ext = os.path.splitext(filename)
-                histogram_filename = f"hist_{filename}.png"
-                histogram_path = os.path.join(app.config['HISTOGRAM_FOLDER'], histogram_filename)
-
-                plt.figure(figsize=(6, 4))
-                plt.hist(processed_img.ravel(), bins=256, range=[0, 256], color='gray')
-                plt.title('Grayscale Histogram')
-                plt.xlabel('Pixel Value')
-                plt.ylabel('Frequency')
-                plt.tight_layout()
-                plt.savefig(histogram_path)
-                plt.close()
             elif konversi == 'edge':
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 processed_img = cv2.Canny(gray, 100, 200)
@@ -86,17 +93,21 @@ def upload_image():
                 blue_value = round(np.mean(blue_channel), 2)
                 processed_img = img  
 
-            # Tentukan ekstensi file output berdasarkan konversi grayscale / tidak
-            if len(processed_img.shape) == 2:
-                processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
-            else:
-                processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
+            # Jika tidak ada konversi yang menghasilkan gambar, gunakan gambar asli
+            if processed_img is None:
+                processed_img = img
 
+            # Simpan hasil olahan
+            processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
             cv2.imwrite(processed_path, processed_img)
+
+            # Buat histogram dari gambar hasil konversi
+            histogram_filename = generate_histogram(processed_img, filename)
 
             return render_template('fitur.html', original=filename, processed=filename, histogram=histogram_filename, blue_value=blue_value)
 
     return render_template('fitur.html', original=None, processed=None, histogram=None, blue_value=None)
+
 
 if __name__ == '__main__':  # perbaiki _name jadi __name__
     app.run(debug=True)
