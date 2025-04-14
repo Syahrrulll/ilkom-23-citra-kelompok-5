@@ -70,7 +70,12 @@ def upload_image():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
 
-            
+
+            img = cv2.imread(filepath)
+            processed_img = None
+            histogram_filename = None
+            color_value = None
+            channel_name = None
 
             # Pilihan konversi
             if konversi == 'grayscale':
