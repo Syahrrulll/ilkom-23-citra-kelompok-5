@@ -3,6 +3,7 @@ import os
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+from rembg import remove  # Import remove dari rembg
 from konfigurasi import Konfigurasi
 
 app = Flask(__name__)
@@ -70,7 +71,6 @@ def upload_image():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
 
-
             img = cv2.imread(filepath)
             processed_img = None
             histogram_filename = None
@@ -110,6 +110,17 @@ def upload_image():
                 processed_img = cv2.warpAffine(img, matrix, (img.shape[1], img.shape[0]))
             elif konversi == 'denoise':
                 processed_img = cv2.medianBlur(img, 5)
+            elif konversi == 'remove_bg':
+                # Menghapus background dengan rembg
+                with open(filepath, 'rb') as input_file:
+                    input_data = input_file.read()
+                    output_data = remove(input_data)
+                
+                # Simpan gambar hasil penghapusan background
+                processed_path = os.path.join(app.config['PROCESSED_FOLDER'], f"no_bg_{filename}")
+                with open(processed_path, 'wb') as output_file:
+                    output_file.write(output_data)
+                processed_img = cv2.imread(processed_path)
 
             if processed_img is None:
                 processed_img = img
