@@ -27,10 +27,15 @@
                     <option value="invert">Invert Warna</option>
                     <option value="threshold">Threshold</option>
                     <option value="bit1">1-bit (Hitam-Putih)</option>
-                    <option value="cek_biru">Cek Kedalaman Warna Biru</option>
-                    <option value="cek_merah">Cek Kedalaman Warna Merah</option>
-                    <option value="cek_hijau">Cek Kedalaman Warna Hijau</option>
+                    <option value="sharpen">Sharpen Filter</option>
+                    <option value="face_detect">Deteksi Wajah</option>
+                    <option value="rotate">Rotasi Gambar</option>
+                    <option value="denoise">Pengurangan Noise (Median Filter)</option>
                 </select>
+
+                <label for="rotate_angle">Sudut Rotasi:</label>
+                <input type="number" name="rotate_angle" id="rotate_angle" value="90" required>
+                
                 <button type="submit">Proses Gambar</button>
             </form>
         </div>
@@ -45,11 +50,6 @@
             {% if histogram %}
             <h2>Histogram Grayscale</h2>
             <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
-            {% endif %}
-
-            {% if histogram_rgb %}
-            <h2>Histogram RGB</h2>
-            <img src="{{ url_for('static', filename='histogram/' + histogram_rgb) }}" alt="Histogram RGB" class="zoomable">
             {% endif %}
 
             {% if blue_value %}

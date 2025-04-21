@@ -92,27 +92,23 @@ def upload_image():
             elif konversi == 'bit1':
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 _, processed_img = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
-            elif konversi in ['cek_biru', 'cek_merah', 'cek_hijau']:
-                if konversi == 'cek_biru':
-                    target = np.array([255, 0, 0])  # BGR
-                    channel_index = 0
-                    channel_name = "Biru"
-                elif konversi == 'cek_hijau':
-                    target = np.array([0, 255, 0])
-                    channel_index = 1
-                    channel_name = "Hijau"
-                elif konversi == 'cek_merah':
-                    target = np.array([0, 0, 255])
-                    channel_index = 2
-                    channel_name = "Merah"
-
-                distance = np.linalg.norm(img.astype(np.int16) - target, axis=2)
-                max_distance = np.sqrt((255**2) * 3)
-                intensity = 255 - (distance / max_distance * 255).astype(np.uint8)
-                processed_img = intensity
-
-                channel = img[:, :, channel_index]
-                color_value = round(np.mean(channel), 2)
+            elif konversi == 'sharpen':
+                kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+                processed_img = cv2.filter2D(img, -1, kernel)
+            elif konversi == 'face_detect':
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+                faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+                for (x, y, w, h) in faces:
+                    cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                processed_img = img
+            elif konversi == 'rotate':
+                angle = float(request.form['rotate_angle'])
+                center = (img.shape[1] // 2, img.shape[0] // 2)
+                matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
+                processed_img = cv2.warpAffine(img, matrix, (img.shape[1], img.shape[0]))
+            elif konversi == 'denoise':
+                processed_img = cv2.medianBlur(img, 5)
 
             if processed_img is None:
                 processed_img = img
