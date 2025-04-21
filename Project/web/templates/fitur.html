@@ -3,60 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konversi Gambar</title>
+    <title>Image Processing Tool</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style_fitur.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="theme-icon">🌓</span>
+    </button>
 
     <main class="fade-in">
-        <h1>Pilih Fitur yang Tersedia</h1>
-        <a href="/">← Kembali ke Halaman Utama</a>
+        <div class="header-container">
+            <h1>Image Processing Tool</h1>
+            <p class="subtitle">Transform your images with powerful processing features</p>
+            <a href="/" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
 
         <div class="container slide-up">
-            <h2>Konversi Gambar</h2>
-            <form action="/proses_gambar" method="POST" enctype="multipart/form-data">
-                <label for="imageInput">Upload Gambar:</label>
-                <input type="file" name="image" id="imageInput" accept="image/*" required>
+            <div class="card-header">
+                <i class="fas fa-image"></i>
+                <h2>Image Conversion</h2>
+            </div>
             
-                <label for="konversi">Pilih Jenis Konversi:</label>
-                <select name="konversi" id="konversi" required>
-                    <option value="grayscale">Grayscale</option>
-                    <option value="edge">Edge Detection (Canny)</option>
-                    <option value="blur">Blur</option>
-                    <option value="invert">Invert Warna</option>
-                    <option value="threshold">Threshold</option>
-                    <option value="bit1">1-bit (Hitam-Putih)</option>
-                    <option value="sharpen">Sharpen Filter</option>
-                    <option value="face_detect">Deteksi Wajah</option>
-                    <option value="rotate">Rotasi Gambar</option>
-                    <option value="denoise">Pengurangan Noise (Median Filter)</option>
-                    <option value="remove_bg">Remove Background</option>
-
-                </select>
-
-                <label for="rotate_angle">Sudut Rotasi:</label>
-                <input type="number" name="rotate_angle" id="rotate_angle" value="90" required>
+            <form action="/proses_gambar" method="POST" enctype="multipart/form-data" class="upload-form">
+                <div class="form-group file-upload">
+                    <label for="imageInput" class="upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span id="file-label">Choose an image file</span>
+                        <span id="file-name"></span>
+                    </label>
+                    <input type="file" name="image" id="imageInput" accept="image/*" required>
+                </div>
                 
-                <button type="submit">Proses Gambar</button>
+                <div class="form-group">
+                    <label for="konversi">
+                        <i class="fas fa-sliders-h"></i> Processing Type
+                    </label>
+                    <div class="select-wrapper">
+                        <select name="konversi" id="konversi" required>
+                            <option value="" disabled selected>Select conversion type</option>
+                            <option value="grayscale">Grayscale</option>
+                            <option value="edge">Edge Detection (Canny)</option>
+                            <option value="blur">Blur</option>
+                            <option value="invert">Invert Colors</option>
+                            <option value="threshold">Threshold</option>
+                            <option value="bit1">1-bit (Black & White)</option>
+                            <option value="sharpen">Sharpen Filter</option>
+                            <option value="face_detect">Face Detection</option>
+                            <option value="rotate">Rotate Image</option>
+                            <option value="denoise">Noise Reduction</option>
+                            <option value="remove_bg">Remove Background</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group rotate-group" id="rotateGroup">
+                    <label for="rotate_angle">
+                        <i class="fas fa-redo"></i> Rotation Angle
+                    </label>
+                    <div class="range-container">
+                        <input type="range" name="rotate_angle" id="rotate_angle" min="0" max="360" value="90" step="1">
+                        <span id="angle-value">90°</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="process-button">
+                    <i class="fas fa-magic"></i> Process Image
+                </button>
             </form>
         </div>
 
         {% if original and processed %}
-        <div class="container fade-in">
-            <h2>Gambar Asli</h2>
-            <img src="{{ url_for('static', filename='uploads/' + original) }}" alt="Original Image" class="zoomable">
-            <h2>Hasil Konversi</h2>
-            <img src="{{ url_for('static', filename='processed/' + processed) }}" alt="Processed Image" class="zoomable">
+        <div class="results-container fade-in">
+            <div class="result-card">
+                <div class="result-header">
+                    <i class="fas fa-image"></i>
+                    <h3>Original Image</h3>
+                </div>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='uploads/' + original) }}" alt="Original Image" class="zoomable">
+                    <div class="image-actions">
+                        <button class="action-btn" onclick="downloadImage('{{ url_for('static', filename='uploads/' + original) }}')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-header">
+                    <i class="fas fa-image"></i>
+                    <h3>Processed Result</h3>
+                </div>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='processed/' + processed) }}" alt="Processed Image" class="zoomable">
+                    <div class="image-actions">
+                        <button class="action-btn" onclick="downloadImage('{{ url_for('static', filename='processed/' + processed) }}')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             {% if histogram %}
-            <h2>Histogram Grayscale</h2>
-            <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
+            <div class="result-card">
+                <div class="result-header">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Grayscale Histogram</h3>
+                </div>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='histogram/' + histogram) }}" alt="Histogram Image" class="zoomable">
+                </div>
+            </div>
             {% endif %}
 
             {% if blue_value %}
-            <h2>Kedalaman Warna {{ channel_name }}</h2>
-            <p>Rata-rata Intensitas {{ channel_name }}: {{ blue_value }}</p>
+            <div class="result-card stats-card">
+                <div class="result-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Color Depth Analysis</h3>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-label">{{ channel_name }} Intensity</span>
+                        <span class="stat-value">{{ blue_value }}</span>
+                    </div>
+                </div>
+            </div>
             {% endif %}
         </div>
         {% endif %}
@@ -64,26 +139,105 @@
 
     <script src="{{ url_for('static', filename='script_fitur.js') }}"></script>
     <script>
+        // Theme toggle
         function toggleTheme() {
             document.body.classList.toggle('dark');
+            const icon = document.querySelector('.theme-icon');
+            if (document.body.classList.contains('dark')) {
+                icon.textContent = '☀️';
+            } else {
+                icon.textContent = '🌓';
+            }
+        }
+
+        // File input display
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
+            document.getElementById('file-name').textContent = fileName;
+            document.getElementById('file-label').textContent = 'Selected:';
+        });
+
+        // Rotate angle display
+        const rotateAngle = document.getElementById('rotate_angle');
+        const angleValue = document.getElementById('angle-value');
+        if (rotateAngle && angleValue) {
+            rotateAngle.addEventListener('input', function() {
+                angleValue.textContent = this.value + '°';
+            });
+        }
+
+        // Show/hide rotate controls based on selection
+        const konversiSelect = document.getElementById('konversi');
+        const rotateGroup = document.getElementById('rotateGroup');
+        if (konversiSelect && rotateGroup) {
+            konversiSelect.addEventListener('change', function() {
+                rotateGroup.style.display = this.value === 'rotate' ? 'block' : 'none';
+            });
+            // Initialize visibility
+            rotateGroup.style.display = konversiSelect.value === 'rotate' ? 'block' : 'none';
         }
 
         // Zoom effect
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const zoomImages = document.querySelectorAll('.zoomable');
-
+            
             zoomImages.forEach(img => {
                 let scale = 1;
+                let isDragging = false;
+                let startX, startY, translateX = 0, translateY = 0;
 
-                img.addEventListener('wheel', function (e) {
+                img.addEventListener('wheel', function(e) {
                     e.preventDefault();
                     const delta = e.deltaY > 0 ? -0.1 : 0.1;
                     scale += delta;
-                    scale = Math.min(Math.max(1, scale), 3);
-                    img.style.transform = `scale(${scale})`;
+                    scale = Math.min(Math.max(0.5, scale), 3);
+                    img.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+                });
+
+                img.addEventListener('mousedown', function(e) {
+                    if (scale > 1) {
+                        isDragging = true;
+                        startX = e.clientX - translateX;
+                        startY = e.clientY - translateY;
+                        img.style.cursor = 'grabbing';
+                    }
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (!isDragging) return;
+                    translateX = e.clientX - startX;
+                    translateY = e.clientY - startY;
+                    img.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+                });
+
+                document.addEventListener('mouseup', function() {
+                    isDragging = false;
+                    img.style.cursor = 'grab';
+                });
+
+                img.addEventListener('mouseleave', function() {
+                    isDragging = false;
+                    img.style.cursor = 'zoom-in';
+                });
+
+                img.addEventListener('dblclick', function() {
+                    scale = 1;
+                    translateX = 0;
+                    translateY = 0;
+                    img.style.transform = 'scale(1)';
                 });
             });
         });
+
+        // Download image function
+        function downloadImage(url) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = url.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
