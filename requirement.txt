@@ -1,1 +1,6 @@
 flask==2.0.1
+opencv-python==4.5.3.56
+matplotlib==3.4.3
+numpy==1.21.2
+rembg==2.0.0
+pyyaml==5.4.1
