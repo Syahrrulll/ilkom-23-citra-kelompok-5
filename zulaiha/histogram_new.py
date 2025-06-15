@@ -28,4 +28,8 @@ def histogramEqual():
     plt.subplot(232)
     plt.imshow(equImg, cmap='gray')
 
-    
+      plt.subplot(235)
+    plt.plot(equhist)
+    plt.plot(equcdfNorm, color='b')
+    plt.xlabel('pixel intesity')
+    plt.ylabel('# of pixels')
