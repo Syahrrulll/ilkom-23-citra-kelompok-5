@@ -8,3 +8,5 @@ cv2.imshow('all',image)
 cv2.imshow('blue',image[:,:,0])
 
 only_blue = image[:,:,0]
+
+histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
