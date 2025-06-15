@@ -33,3 +33,7 @@ def histogramEqual():
     plt.plot(equcdfNorm, color='b')
     plt.xlabel('pixel intesity')
     plt.ylabel('# of pixels')
+
+    
+    claheObj = cv.createCLAHE(clipLimit=5, tileGridSize=(8,8))
+    claheImg = claheObj.apply(img)
