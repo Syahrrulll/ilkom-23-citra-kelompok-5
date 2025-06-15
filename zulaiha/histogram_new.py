@@ -23,3 +23,9 @@ def histogramEqual():
     equhist = cv.calcHist([equImg], [0], None, [256], [0,256])
     equcdf = equhist.cumsum()
     equcdfNorm = equcdf * float(equhist.max()) / equcdf.max()
+
+    
+    plt.subplot(232)
+    plt.imshow(equImg, cmap='gray')
+
+    
