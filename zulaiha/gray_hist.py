@@ -7,3 +7,5 @@ print(image.shape)
 cv2.imshow('gray',image)
 
 
+histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
+
