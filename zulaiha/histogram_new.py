@@ -37,3 +37,7 @@ def histogramEqual():
     
     claheObj = cv.createCLAHE(clipLimit=5, tileGridSize=(8,8))
     claheImg = claheObj.apply(img)
+
+        clahehist = cv.calcHist([claheImg], [0], None, [256], [0,256])
+    clahecdf = clahehist.cumsum()
+    clahecdfNorm = clahecdf * float(clahehist.max()) / clahecdf.max()
