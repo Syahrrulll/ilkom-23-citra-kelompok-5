@@ -9,3 +9,10 @@ cv2.imshow('gray',image)
 
 histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
 
+plt.figure()
+plt.title("Histogram Grayscale")
+plt.xlabel("Intensitas Piksel")
+plt.ylabel("Frekuensi")
+plt.plot(histogram)
+plt.xlim([0, 256])
+plt.show()
