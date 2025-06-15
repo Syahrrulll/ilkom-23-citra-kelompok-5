@@ -19,4 +19,4 @@ plt.ylabel("Frekuensi")
 plt.plot(histogram)
 plt.xlim([0, 256])
 plt.show()
-# cv2.waitK
+
