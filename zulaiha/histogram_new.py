@@ -41,3 +41,6 @@ def histogramEqual():
     clahehist = cv.calcHist([claheImg], [0], None, [256], [0,256])
     clahecdf = clahehist.cumsum()
     clahecdfNorm = clahecdf * float(clahehist.max()) / clahecdf.max()
+
+        plt.subplot(233)
+    plt.imshow(claheImg, cmap='gray')
