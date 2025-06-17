@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image History</title>
+    <style>
+        body { font-family: Arial; background: #f9f9f9; padding: 20px; }
+        h2 { margin-bottom: 10px; }
+        .image-box { display: flex; flex-wrap: wrap; gap: 10px; }
+        img { width: 150px; height: auto; border: 2px solid #ccc; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Riwayat Upload Gambar</h1>
+
+    <h2>Original Uploads</h2>
+    <div class="image-box">
+        {% for img in uploads %}
+            <img src="{{ url_for('static', filename='uploads/' + img) }}" alt="{{ img }}">
+        {% endfor %}
+    </div>
+
+    <h2>Processed Results</h2>
+    <div class="image-box">
+        {% for img in processed %}
+            <img src="{{ url_for('static', filename='processed/' + img) }}" alt="{{ img }}">
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('index') }}">← Back</a>
+</body>
+</html>
