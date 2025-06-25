@@ -17,4 +17,4 @@ plt.xlabel("Intensitas Piksel")
 plt.ylabel("Frekuensi")
 plt.plot(histogram)
 plt.xlim([0, 256])
-plt.show()
+plt.show(
