@@ -28,9 +28,9 @@ def upload_image():
             processed_path = os.path.join(app.config['PROCESSED_FOLDER'], file.filename)
             cv2.imwrite(processed_path, gray_img)
             
-            return render_template('index.html', original=file.filename, processed=file.filename)
+            return render_template ('index.html', original=file.filename, processed=file.filename)
     
-    return render_template('index.html', original=None, processed=None)
+    return render_template ('index.html', original=None, processed=None)
 
 if __name__ == '__main__':
     app.run(debug=True)
