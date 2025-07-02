@@ -178,7 +178,7 @@ def upload_image():
 
         if processed_img is None:
             processed_img = img
-
+        #Simpan hasil proses
         processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
         cv2.imwrite(processed_path, processed_img)
         histogram_filename = generate_histogram(processed_img, filename)
