@@ -70,6 +70,7 @@ def history():
     processed = os.listdir(app.config['PROCESSED_FOLDER'])
     return render_template('history.html', uploads=uploads, processed=processed)
 
+#Route untuk memproses gambar berdasarkan pilihan user
 @app.route('/proses_gambar', methods=['GET', 'POST'])
 def upload_image():
     if request.method == 'POST':
