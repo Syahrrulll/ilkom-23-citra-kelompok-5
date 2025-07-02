@@ -18,11 +18,6 @@ cv2.imshow('all', image)
 # Menampilkan hanya channel hijau (grayscale intensitas channel hijau)
 cv2.imshow('green', only_green)
 
-# Menghitung histogram dari channel hijau
-# [only_green]: channel hijau sebagai gambar input
-# [0]: channel ke-0 karena hanya 1 channel pada array only_green
-# None: tidak menggunakan mask
-# [256]: jumlah bin (0–255)
 # [0, 256]: rentang nilai intensitas piksel
 histogram = cv2.calcHist([only_green], [0], None, [256], [0, 256])
 
