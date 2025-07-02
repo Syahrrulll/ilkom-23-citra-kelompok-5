@@ -11,11 +11,6 @@ print(image.shape)
 # Menampilkan gambar grayscale dengan jendela berjudul 'gray'
 cv2.imshow('gray', image)
 
-# Menghitung histogram dari gambar grayscale
-# [image]: gambar input
-# [0]: channel yang digunakan (0 untuk grayscale)
-# None: tidak menggunakan mask
-# [256]: jumlah bin (0–255)
 # [0, 256]: rentang nilai intensitas piksel
 histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
 
