@@ -4,33 +4,33 @@ import os  # Untuk mengakses sistem file dan direktori
 import cv2 as cv  # OpenCV untuk pemrosesan gambar
 
 def histogramEqual():
-    # Mendapatkan direktori kerja saat ini
+    # Untuk mendapatkan direktori kerja saat ini
     root = os.getcwd()
 
-    # Menggabungkan path direktori kerja dengan nama file gambar
+    # Untuk Menggabungkan path direktori kerja dengan nama file gambar
     imgPath = os.path.join(root, 'sample-histogram.png')
 
-    # Membaca gambar dalam mode grayscale (hitam putih)
+    # Untuk Membaca gambar dalam mode grayscale (hitam putih)
     img = cv.imread(imgPath, cv.IMREAD_GRAYSCALE)
 
-    # Menghitung histogram dari gambar asli
+    # Untuk Menghitung histogram dari gambar asli
     hist = cv.calcHist([img], [0], None, [256], [0,256])
 
-    # Menghitung CDF (Cumulative Distribution Function) dari histogram
+    # Untuk Menghitung CDF (Cumulative Distribution Function) dari histogram
     cdf = hist.cumsum()
 
-    # Menormalisasi CDF agar dapat ditampilkan di grafik bersama histogram
+    # Untuk Menormalisasi CDF agar dapat ditampilkan di grafik bersama histogram
     cdfNorm = cdf * float(hist.max()) / cdf.max()
 
-    # Membuat figure (kanvas) untuk menampilkan hasil
+    # Untuk Membuat figure (kanvas) untuk menampilkan hasil
     plt.figure()
     
-    # Menampilkan gambar asli dalam format grayscale
+    # Untuk Menampilkan gambar asli dalam format grayscale
     plt.subplot(231)
     plt.imshow(img, cmap='gray')
     plt.title("Original Image")
 
-    # Menampilkan histogram dan CDF dari gambar asli
+    # Untuk Menampilkan histogram dan CDF dari gambar asli
     plt.subplot(234)
     plt.plot(hist)
     plt.plot(cdfNorm, color='b')
@@ -38,22 +38,22 @@ def histogramEqual():
     plt.xlabel('Pixel Intensity')
     plt.ylabel('# of Pixels')
     
-    # Melakukan histogram equalization pada gambar asli
+    # Untuk Melakukan histogram equalization pada gambar asli
     equImg = cv.equalizeHist(img)
 
-    # Menghitung histogram dari gambar yang telah di-equalize
+    # Untuk Menghitung histogram dari gambar yang telah di-equalize
     equhist = cv.calcHist([equImg], [0], None, [256], [0,256])
 
-    # Menghitung dan menormalkan CDF dari gambar equalized
+    # Untuk Menghitung dan menormalkan CDF dari gambar equalized
     equcdf = equhist.cumsum()
     equcdfNorm = equcdf * float(equhist.max()) / equcdf.max()
 
-    # Menampilkan gambar hasil histogram equalization
+    # UntukMenampilkan gambar hasil histogram equalization
     plt.subplot(232)
     plt.imshow(equImg, cmap='gray')
     plt.title("Equalized Image")
 
-    # Menampilkan histogram dan CDF dari gambar equalized
+    # Untuk Menampilkan histogram dan CDF dari gambar equalized
     plt.subplot(235)
     plt.plot(equhist)
     plt.plot(equcdfNorm, color='b')
@@ -61,21 +61,20 @@ def histogramEqual():
     plt.xlabel('Pixel Intensity')
     plt.ylabel('# of Pixels')
 
-    # Membuat objek CLAHE (Contrast Limited Adaptive Histogram Equalization)
+    # Untuk Membuat objek CLAHE (Contrast Limited Adaptive Histogram Equalization)
     claheObj = cv.createCLAHE(clipLimit=5, tileGridSize=(8,8))
 
-    # Menerapkan CLAHE pada gambar asli
+    # Untuk Menerapkan CLAHE pada gambar asli
     claheImg = claheObj.apply(img)
 
-    # Menghitung histogram dari hasil CLAHE
+    # Untuk Menghitung histogram dari hasil CLAHE
     clahehist = cv.calcHist([claheImg], [0], None, [256], [0,256])
 
-    # Menghitung dan menormalkan CDF dari hasil CLAHE
+    # Untuk Menghitung dan menormalkan CDF dari hasil CLAHE
     clahecdf = clahehist.cumsum()
     clahecdfNorm = clahecdf * float(clahehist.max()) / clahecdf.max()
     
-    # Menampilkan gambar hasil CLAHE
+    # Untuk Menampilkan gambar hasil CLAHE
     plt.subplot(233)
     plt.imshow(claheImg, cmap='gray')
     plt.title("CLAHE Image")
-
