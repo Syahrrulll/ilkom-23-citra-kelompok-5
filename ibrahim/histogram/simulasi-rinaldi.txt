@@ -26,3 +26,4 @@ Hist[3]=Hist[3]+1;
 
 .. dimudahkan dengan ini
 SELECT COUNT(pixel) FROM tb_citra WHERE intensitas=0
+
