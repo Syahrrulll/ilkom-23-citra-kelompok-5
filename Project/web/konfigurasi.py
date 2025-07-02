@@ -1,5 +1,6 @@
 import yaml
 
+
 class Konfigurasi():
     YML_FILE = "config.yml"
 
