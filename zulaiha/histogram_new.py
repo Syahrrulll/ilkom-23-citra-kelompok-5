@@ -24,3 +24,16 @@ def histogramEqual():
 
     # Membuat figure (kanvas) untuk menampilkan hasil
     plt.figure()
+    
+    # Menampilkan gambar asli dalam format grayscale
+    plt.subplot(231)
+    plt.imshow(img, cmap='gray')
+    plt.title("Original Image")
+
+    # Menampilkan histogram dan CDF dari gambar asli
+    plt.subplot(234)
+    plt.plot(hist)
+    plt.plot(cdfNorm, color='b')
+    plt.title("Histogram & CDF (Original)")
+    plt.xlabel('Pixel Intensity')
+    plt.ylabel('# of Pixels')
