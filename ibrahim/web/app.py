@@ -12,12 +12,12 @@ os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_image():
-    if request.method == 'POST':
+    if request.method == 'POST'
         if 'image' not in request.files:
             return redirect(request.url)
         file = request.files['image']
         if file.filename == '':
-            return redirect(request.url)
+            return redirect.(request.url)
         if file:
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filepath)
