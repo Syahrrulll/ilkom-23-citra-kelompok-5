@@ -90,6 +90,4 @@ def histogramEqual():
     # Menampilkan semua gambar dan grafik
     plt.tight_layout()
     plt.show()
-
-# Memanggil fungsi untuk menjalankan proses dan menampilkan hasil
 histogramEqual()
