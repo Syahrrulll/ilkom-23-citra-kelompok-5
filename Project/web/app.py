@@ -63,6 +63,7 @@ def config_spk():
         return redirect(url_for("config_spk"))
     return render_template("konfigurasi.html", data=data)
 
+#Route untuk menampilkan riwayat gambar yang sudah di proses
 @app.route('/history')
 def history():
     uploads = os.listdir(app.config['UPLOAD_FOLDER'])
