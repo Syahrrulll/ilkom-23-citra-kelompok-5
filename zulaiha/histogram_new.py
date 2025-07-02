@@ -37,3 +37,39 @@ def histogramEqual():
     plt.title("Histogram & CDF (Original)")
     plt.xlabel('Pixel Intensity')
     plt.ylabel('# of Pixels')
+    
+    # Melakukan histogram equalization pada gambar asli
+    equImg = cv.equalizeHist(img)
+
+    # Menghitung histogram dari gambar yang telah di-equalize
+    equhist = cv.calcHist([equImg], [0], None, [256], [0,256])
+
+    # Menghitung dan menormalkan CDF dari gambar equalized
+    equcdf = equhist.cumsum()
+    equcdfNorm = equcdf * float(equhist.max()) / equcdf.max()
+
+    # Menampilkan gambar hasil histogram equalization
+    plt.subplot(232)
+    plt.imshow(equImg, cmap='gray')
+    plt.title("Equalized Image")
+
+    # Menampilkan histogram dan CDF dari gambar equalized
+    plt.subplot(235)
+    plt.plot(equhist)
+    plt.plot(equcdfNorm, color='b')
+    plt.title("Histogram & CDF (Equalized)")
+    plt.xlabel('Pixel Intensity')
+    plt.ylabel('# of Pixels')
+
+    # Membuat objek CLAHE (Contrast Limited Adaptive Histogram Equalization)
+    claheObj = cv.createCLAHE(clipLimit=5, tileGridSize=(8,8))
+
+    # Menerapkan CLAHE pada gambar asli
+    claheImg = claheObj.apply(img)
+
+    # Menghitung histogram dari hasil CLAHE
+    clahehist = cv.calcHist([claheImg], [0], None, [256], [0,256])
+
+    # Menghitung dan menormalkan CDF dari hasil CLAHE
+    clahecdf = clahehist.cumsum()
+    clahecdfNorm = clahecdf * float(clahehist.max()) / clahecdf.max()
