@@ -51,6 +51,7 @@ def get_dominant_color(image):
 def index():
     return render_template('index.html')
 
+#Route untuk konfigurasi SPK
 @app.route('/config_spk', methods=['GET', 'POST'])
 def config_spk():
     konfig = Konfigurasi()
