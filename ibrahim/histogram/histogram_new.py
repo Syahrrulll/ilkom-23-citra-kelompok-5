@@ -15,11 +15,7 @@ def histogramEqual():
 
     # Menghitung histogram dari gambar asli
     hist = cv.calcHist([img], [0], None, [256], [0,256])
-
-    # Menghitung cumulative distribution function (CDF) dari histogram
     cdf = hist.cumsum()
-
-    # Menormalisasi CDF agar bisa digambarkan di grafik
     cdfNorm = cdf * float(hist.max()) / cdf.max()
 
     # Membuat figure untuk menampilkan gambar dan grafik
