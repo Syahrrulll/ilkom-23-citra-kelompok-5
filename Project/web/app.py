@@ -9,6 +9,7 @@ from collections import Counter
 from PIL import Image
 
 app = Flask(__name__)
+#Konfigurasi folder untuk menyimpan file upload, hasil proses dan histogram
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['PROCESSED_FOLDER'] = 'static/processed/'
 app.config['HISTOGRAM_FOLDER'] = 'static/histogram/'
