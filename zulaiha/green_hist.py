@@ -15,7 +15,7 @@ print(image.shape)
 # Menampilkan gambar asli (berwarna) dalam jendela berjudul 'all'
 cv2.imshow('all', image)
 
-# Menampilkan hanya channel hijau (grayscale intensitas channel hijau)
+# Menampilkan hanya channel hijau,(grayscale intensitas channel hijau)
 cv2.imshow('green', only_green)
 
 # [0, 256]: rentang nilai intensitas piksel
