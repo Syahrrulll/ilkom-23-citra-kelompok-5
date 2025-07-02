@@ -181,6 +181,7 @@ def upload_image():
         #Simpan hasil proses
         processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
         cv2.imwrite(processed_path, processed_img)
+        #Buat histogram dari gambar hasil proses
         histogram_filename = generate_histogram(processed_img, filename)
 
     return render_template('fitur.html',
