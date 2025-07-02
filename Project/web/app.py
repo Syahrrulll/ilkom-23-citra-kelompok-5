@@ -192,6 +192,6 @@ def upload_image():
                                channel_name=channel_name)
     #jika metode get, tampilkan halaman kosong 
     return render_template('fitur.html', original=None, processed=None, histogram=None, blue_value=None)
-
+#jalankan aplikasi flask
 if __name__ == '__main__':
     app.run(debug=True)
