@@ -1,7 +1,7 @@
 # Histogram citra adalah representasi distribusi intensitas piksel dalam suatu citra. 
 # Histogram dapat digunakan untuk memahami kontras, kecerahan, dan distribusi warna dalam gambar.
 import cv2
-import numpy as np
+import. numpy as np
 import matplotlib.pyplot as plt
 
 # Baca gambar grayscale
