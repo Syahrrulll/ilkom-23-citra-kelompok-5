@@ -10,6 +10,7 @@ def histogramEqual():
     # Membuat path gambar yang akan diproses
     imgPath = os.path.join(root, 'sample-histogram.png')
 
+    # Membuat path gambar yang akan diproses
     img = cv.imread(imgPath, cv.IMREAD_GRAYSCALE)
 
     # Menghitung histogram dari gambar asli
