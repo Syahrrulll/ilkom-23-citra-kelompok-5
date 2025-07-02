@@ -46,6 +46,7 @@ def get_dominant_color(image):
     dominant_color = counts.most_common(1)[0][0]
     return dominant_color
 
+#Route halaman utama
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
