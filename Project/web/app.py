@@ -38,6 +38,7 @@ def generate_histogram(image, filename):
     plt.close()
     return histogram_filename
 
+#Fungsi untuk mengambil warna dominan dari gambar
 def get_dominant_color(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     pixels = image.reshape(-1, 3)
