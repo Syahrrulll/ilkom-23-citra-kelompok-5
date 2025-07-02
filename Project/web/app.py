@@ -26,7 +26,7 @@ def generate_histogram(image, filename):
     if len(image.shape) == 2:
         plt.hist(image.ravel(), bins=256, range=[0, 256], color='gray')
         plt.title('Grayscale Histogram')
-    else: 
+    else: #jika RGB
         color = ('b', 'g', 'r')
         for i, col in enumerate(color):
             plt.plot(cv2.calcHist([image], [i], None, [256], [0, 256]), color=col)
