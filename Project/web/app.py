@@ -92,6 +92,7 @@ def upload_image():
         channel_name = None
         color_value = None
 
+        #Proses gambar sesuai pilihan
         if konversi == 'grayscale':
             processed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         elif konversi == 'edge':
