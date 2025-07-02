@@ -18,6 +18,7 @@ app.config['HISTOGRAM_FOLDER'] = 'static/histogram/'
 for folder in [app.config['UPLOAD_FOLDER'], app.config['PROCESSED_FOLDER'], app.config['HISTOGRAM_FOLDER']]:
     os.makedirs(folder, exist_ok=True)
 
+#Fungsi untuk membuat histogram dari gambar
 def generate_histogram(image, filename):
     histogram_filename = f"hist_{filename}.png"
     histogram_path = os.path.join(app.config['HISTOGRAM_FOLDER'], histogram_filename)
@@ -25,7 +26,7 @@ def generate_histogram(image, filename):
     if len(image.shape) == 2:
         plt.hist(image.ravel(), bins=256, range=[0, 256], color='gray')
         plt.title('Grayscale Histogram')
-    else:
+    else: 
         color = ('b', 'g', 'r')
         for i, col in enumerate(color):
             plt.plot(cv2.calcHist([image], [i], None, [256], [0, 256]), color=col)
