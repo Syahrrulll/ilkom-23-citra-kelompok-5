@@ -190,7 +190,7 @@ def upload_image():
                                histogram=histogram_filename,
                                blue_value=color_value,
                                channel_name=channel_name)
-
+    #jika metode get, tampilkan halaman kosong 
     return render_template('fitur.html', original=None, processed=None, histogram=None, blue_value=None)
 
 if __name__ == '__main__':
