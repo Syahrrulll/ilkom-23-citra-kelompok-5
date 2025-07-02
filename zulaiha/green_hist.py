@@ -1,22 +1,42 @@
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
+import cv2  # Library OpenCV untuk pengolahan gambar
+import numpy as np  # Library NumPy untuk manipulasi array
+import matplotlib.pyplot as plt  # Library Matplotlib untuk membuat grafik
 
+# Membaca gambar berwarna dari file 'sample.png'
 image = cv2.imread('sample.png')
-only_green = image[:,:,1]
 
+# Mengambil channel warna hijau dari gambar
+# Channel ke-1 mewakili warna hijau dalam format BGR OpenCV
+only_green = image[:, :, 1]
+
+# Menampilkan ukuran gambar (tinggi, lebar, jumlah channel warna)
 print(image.shape)
 
-cv2.imshow('all',image)
-cv2.imshow('green',only_green)
+# Menampilkan gambar asli (berwarna) dalam jendela berjudul 'all'
+cv2.imshow('all', image)
 
+# Menampilkan hanya channel hijau (grayscale intensitas channel hijau)
+cv2.imshow('green', only_green)
+
+# Menghitung histogram dari channel hijau
+# [only_green]: channel hijau sebagai gambar input
+# [0]: channel ke-0 karena hanya 1 channel pada array only_green
+# None: tidak menggunakan mask
+# [256]: jumlah bin (0–255)
+# [0, 256]: rentang nilai intensitas piksel
 histogram = cv2.calcHist([only_green], [0], None, [256], [0, 256])
 
+# Membuat figure baru untuk grafik histogram
 plt.figure()
-plt.title("Histogram green")
-plt.xlabel("Intensitas Piksel")
-plt.ylabel("Frekuensi")
-plt.plot(histogram)
-plt.xlim([0, 256])
-plt.show()
+plt.title("Histogram Green")  # Judul grafik
+plt.xlabel("Intensitas Piksel")  # Label sumbu X
+plt.ylabel("Frekuensi")  # Label sumbu Y
 
+# Menampilkan grafik histogram sebagai garis
+plt.plot(histogram)
+
+# Membatasi sumbu X dari 0 sampai 255
+plt.xlim([0, 256])
+
+# Menampilkan grafik
+plt.show()
