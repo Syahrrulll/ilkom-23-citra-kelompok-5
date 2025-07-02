@@ -73,3 +73,9 @@ def histogramEqual():
     # Menghitung dan menormalkan CDF dari hasil CLAHE
     clahecdf = clahehist.cumsum()
     clahecdfNorm = clahecdf * float(clahehist.max()) / clahecdf.max()
+    
+    # Menampilkan gambar hasil CLAHE
+    plt.subplot(233)
+    plt.imshow(claheImg, cmap='gray')
+    plt.title("CLAHE Image")
+
