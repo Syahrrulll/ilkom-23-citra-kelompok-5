@@ -175,7 +175,7 @@ def upload_image():
         cv2.imwrite(processed_path, processed_img)
         histogram_filename = generate_histogram(processed_img, filename)
 
-       return render_template('fitur.html',
+    return render_template('fitur.html',
                                original=filename,
                                processed=filename,
                                histogram=histogram_filename,
