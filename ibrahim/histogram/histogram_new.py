@@ -6,6 +6,7 @@ import cv2 as cv
 def histogramEqual():
     # Mengambil direktori kerja saat ini
     root = os.getcwd()
+    # Membuat path gambar yang akan diproses
     imgPath = os.path.join(root, 'sample-histogram.png')
     img = cv.imread(imgPath, cv.IMREAD_GRAYSCALE)
     hist = cv.calcHist([img], [0], None, [256], [0,256])
