@@ -78,6 +78,7 @@ def upload_image():
         konversi = request.form.get('konversi')
         angle = float(request.form.get('rotate_angle', 90))
 
+        #jika file kosong
         if not file or file.filename == '':
             return redirect(request.url)
 
